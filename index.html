@@ -59,11 +59,13 @@ a{color:inherit}
 .fx-out div{background:var(--navy-soft);border-radius:10px;padding:8px 12px}
 .fx-out b{display:block;font-size:12px;color:var(--muted);font-weight:600}
 .fx-out em{font-style:normal;font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-.fx-set{margin-top:8px;font-size:12px;color:var(--muted)}
+.fx-note{margin-top:8px;font-size:11px;color:var(--muted);text-align:right}
+.fx-set{margin-top:4px;font-size:12px;color:var(--muted)}
 .fx-set summary{cursor:pointer;list-style:none;display:inline-block}
 .fx-set summary::-webkit-details-marker{display:none}
 .fx-set summary::before{content:"⚙ "}
 .fx-set label{display:inline-flex;align-items:center;gap:4px;margin:6px 12px 0 0}
+.fx-reset{font:inherit;font-size:12px;margin-top:6px;padding:3px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer}
 .fx-set input{width:68px;font:inherit;font-size:13px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
 .wx-days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .wx-days div{text-align:center;background:var(--bg);border-radius:12px;padding:10px 4px 8px}
@@ -77,16 +79,15 @@ a{color:inherit}
 .wx-hourly:empty{display:none}
 .wx-hourly::-webkit-scrollbar{display:none}
 .wx-hourly table{border-collapse:collapse;table-layout:fixed}
-.wx-hourly th,.wx-hourly td{width:52px;min-width:52px;text-align:center;padding:4px 0;font-size:12px;font-weight:500;color:var(--muted);border-top:1px solid var(--line);white-space:nowrap}
-.wx-hourly tr:first-child th,.wx-hourly tr:first-child td{border-top:0}
-.wx-hourly th.lab,.wx-hourly td.lab{position:sticky;left:0;background:var(--card);width:40px;min-width:40px;text-align:left;font-size:11px;color:var(--muted);z-index:1}
-.wx-hourly .hd td{font-weight:700;color:var(--ink);padding-top:6px}
-.wx-hourly .hd td.day{color:#7c5cff}
-.wx-hourly .hd td.day b{display:inline-block;background:#7c5cff;color:#fff;font-size:10.5px;border-radius:999px;padding:1px 7px;margin-bottom:2px}
-.wx-hourly .ic td{font-size:20px;padding:2px 0 4px}
-.wx-hourly .tp td{font-size:14px;font-weight:700;color:var(--ink)}
-.wx-hourly .pp td{color:#3b82c4;font-weight:600}
-.wx-hourly td.nxt{border-left:1px solid #c9bfff}
+.wx-hourly td{width:50px;min-width:50px;text-align:center;padding:3px 0;font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap;line-height:1.3}
+.wx-hourly tr.hd td{font-weight:600;color:var(--ink);padding-bottom:5px;vertical-align:bottom}
+.wx-hourly tr.hd td.day{color:#7c5cff}
+.wx-hourly tr.hd td.day b{display:block;font-size:10px;font-weight:700;color:#7c5cff;line-height:1.2;margin-bottom:1px}
+.wx-hourly tr.ic td{font-size:19px;padding:2px 0}
+.wx-hourly tr.tp td{font-size:13.5px;font-weight:700;color:var(--ink)}
+.wx-hourly tr.pp td{font-size:11.5px;color:#3b82c4;font-weight:600}
+.wx-hourly tr td.lab{position:sticky;left:0;background:var(--card);width:34px;min-width:34px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);z-index:1}
+.wx-hourly td.nxt{border-left:1px dashed #c9bfff}
 .flights{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .flight{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
 .flight b{display:block;font-size:13px;color:var(--muted);font-weight:500}
@@ -207,10 +208,12 @@ a{color:inherit}
       <div><b>💴 현금</b><em id="fxCash">—</em></div>
       <div><b>💳 신용카드</b><em id="fxCard">—</em></div>
     </div>
+    <div class="fx-note" id="fxNote">환율 불러오는 중…</div>
     <details class="fx-set">
       <summary>환율 설정</summary>
       <label>100엔 = <input id="fxRate" type="number" inputmode="decimal" step="0.1"> 원</label>
       <label>카드 수수료 <input id="fxFee" type="number" inputmode="decimal" step="0.1"> %</label>
+      <button type="button" id="fxReset" class="fx-reset">실시간으로 되돌리기</button>
     </details>
   </div>
   <div class="flights">
@@ -400,6 +403,12 @@ a{color:inherit}
     var FX='fukuoka-2026-fx-v2', fx=JSON.parse(localStorage.getItem(FX)||'{}');
     var jpy=document.getElementById('fxJpy'), rate=document.getElementById('fxRate'), fee=document.getElementById('fxFee');
     rate.value=fx.rate||850; fee.value=(fx.fee!=null?fx.fee:2.3);
+    var fxNote=document.getElementById('fxNote');
+    if(!fx.manual){
+      fetch('https://open.er-api.com/v6/latest/JPY').then(function(r){return r.json();}).then(function(j){
+        if(j&&j.rates&&j.rates.KRW){ rate.value=(j.rates.KRW*100).toFixed(2); calc(); if(fxNote) fxNote.textContent='실시간 매매기준율 100엔 = '+(j.rates.KRW*100).toFixed(1)+'원 · 트래블월렛과 거의 동일'; }
+      }).catch(function(){});
+    } else if(fxNote){ fxNote.textContent='직접 입력한 환율 100엔 = '+rate.value+'원'; }
     function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
     function calc(){
       var y=parseFloat(jpy.value)||0, r=parseFloat(rate.value)||0, f=parseFloat(fee.value)||0;
@@ -407,10 +416,13 @@ a{color:inherit}
       document.getElementById('fxCash').textContent=y?won(cash):'—';
       document.getElementById('fxCard').textContent=y?won(card):'—';
     }
-    [jpy,rate,fee].forEach(function(el){ el.addEventListener('input',function(){
-      calc(); try{localStorage.setItem(FX,JSON.stringify({rate:rate.value,fee:fee.value}));}catch(e){}
+    jpy.addEventListener('input',calc);
+    [rate,fee].forEach(function(el){ el.addEventListener('input',function(){
+      calc(); fx.manual=true; if(fxNote) fxNote.textContent='직접 입력한 환율 100엔 = '+rate.value+'원';
+      try{localStorage.setItem(FX,JSON.stringify({rate:rate.value,fee:fee.value,manual:true}));}catch(e){}
     }); });
     calc();
+    var rb=document.getElementById('fxReset'); if(rb) rb.addEventListener('click',function(){ try{localStorage.removeItem(FX);}catch(e){} location.reload(); });
   }catch(err){}
 
   // 맨 위로
@@ -430,14 +442,15 @@ a{color:inherit}
       now.textContent='실시간 · 지금 '+Math.round(d.current.temperature_2m)+'° '+c[1];
       var tNow=new Date(d.current.time);
       var start=d.hourly.time.findIndex(function(t){return new Date(t)>=tNow;}); if(start<0) start=0;
-      var r1='<td class="lab"></td>', r2='<td class="lab">날씨</td>', r3='<td class="lab">기온</td>', r4='<td class="lab">강수</td>', today=d.current.time.slice(0,10);
-      for(var i=start;i<Math.min(start+30,d.hourly.time.length);i++){
-        var t=d.hourly.time[i], hh=+t.slice(11,13), w=wc(d.hourly.weather_code[i]), pp=d.hourly.precipitation_probability[i];
-        var isNext=t.slice(0,10)!==today && hh===0, cls=isNext?' class="nxt day"':'';
-        r1+='<td'+cls+'>'+(isNext?'<b>내일</b><br>':'')+hh+':00</td>';
-        r2+='<td'+(isNext?' class="nxt"':'')+'>'+w[0]+'</td>';
-        r3+='<td'+(isNext?' class="nxt"':'')+'>'+Math.round(d.hourly.temperature_2m[i])+'°</td>';
-        r4+='<td'+(isNext?' class="nxt"':'')+'>'+pp+'%</td>';
+      var r1='<td class="lab"></td>', r2='<td class="lab">날씨</td>', r3='<td class="lab">기온</td>', r4='<td class="lab">강수</td>';
+      for(var i=start;i<Math.min(start+24,d.hourly.time.length);i++){
+        var t=d.hourly.time[i], hh=+t.slice(11,13), code=d.hourly.weather_code[i], w=wc(code), pp=d.hourly.precipitation_probability[i];
+        var ico=(hh>=19||hh<6)&&(code===0||code===1)?'🌙':(hh>=19||hh<6)&&code===2?'☁️':w[0];
+        var isNext=hh===0&&i>start, nx=isNext?' nxt':'';
+        r1+='<td class="'+(isNext?'day':'')+nx+'">'+(isNext?'<b>'+(+t.slice(5,7))+'/'+(+t.slice(8,10))+'</b>':'')+hh+':00</td>';
+        r2+='<td class="'+nx+'">'+ico+'</td>';
+        r3+='<td class="'+nx+'">'+Math.round(d.hourly.temperature_2m[i])+'°</td>';
+        r4+='<td class="'+nx+'">'+pp+'%</td>';
       }
       hr.innerHTML='<table><tr class="hd">'+r1+'</tr><tr class="ic">'+r2+'</tr><tr class="tp">'+r3+'</tr><tr class="pp">'+r4+'</tr></table>';
       var days=['일','월','화','수','목','금','토'], out='', want=['10-10','10-11','10-12'];
