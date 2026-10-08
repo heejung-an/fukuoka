@@ -86,7 +86,7 @@ a{color:inherit}
 .wx-hourly tr.ic td{font-size:19px;padding:2px 0}
 .wx-hourly tr.tp td{font-size:13.5px;font-weight:700;color:var(--ink)}
 .wx-hourly tr.pp td{font-size:11.5px;color:#3b82c4;font-weight:600}
-.wx-hourly tr td.lab{position:sticky;left:0;background:var(--card);width:34px;min-width:34px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);z-index:1}
+.wx-hourly tr.pp td::before{content:"☔";font-size:10px;margin-right:2px;opacity:.8}
 .wx-hourly td.nxt{border-left:1px dashed #c9bfff}
 .flights{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .flight{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
@@ -442,7 +442,7 @@ a{color:inherit}
       now.textContent='실시간 · 지금 '+Math.round(d.current.temperature_2m)+'° '+c[1];
       var tNow=new Date(d.current.time);
       var start=d.hourly.time.findIndex(function(t){return new Date(t)>=tNow;}); if(start<0) start=0;
-      var r1='<td class="lab"></td>', r2='<td class="lab">날씨</td>', r3='<td class="lab">기온</td>', r4='<td class="lab">강수</td>';
+      var r1='', r2='', r3='', r4='';
       for(var i=start;i<Math.min(start+72,d.hourly.time.length);i++){
         var t=d.hourly.time[i], hh=+t.slice(11,13), code=d.hourly.weather_code[i], w=wc(code), pp=d.hourly.precipitation_probability[i];
         var ico=(hh>=19||hh<6)&&(code===0||code===1)?'🌙':(hh>=19||hh<6)&&code===2?'☁️':w[0];
