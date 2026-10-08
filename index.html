@@ -453,11 +453,10 @@ a{color:inherit}
         r4+='<td class="'+nx+'">'+pp+'%</td>';
       }
       hr.innerHTML='<table><tr class="hd">'+r1+'</tr><tr class="ic">'+r2+'</tr><tr class="tp">'+r3+'</tr><tr class="pp">'+r4+'</tr></table>';
-      var days=['일','월','화','수','목','금','토'], out='', want=['10-10','10-11','10-12'];
-      for(var j=0;j<d.daily.time.length;j++){
-        var key=d.daily.time[j].slice(5); if(want.indexOf(key)<0) continue;
+      var days=['일','월','화','수','목','금','토'], names=['오늘','내일','모레'], out='';
+      for(var j=0;j<Math.min(3,d.daily.time.length);j++){
         var dt=new Date(d.daily.time[j]+'T00:00:00'), w2=wc(d.daily.weather_code[j]), pm=d.daily.precipitation_probability_max[j];
-        out+='<div><b>'+(dt.getMonth()+1)+'/'+dt.getDate()+' '+days[dt.getDay()]+'</b><i>'+w2[0]+'</i><span><small>'+Math.round(d.daily.temperature_2m_min[j])+'°</small> / '+Math.round(d.daily.temperature_2m_max[j])+'°</span><u>'+(pm>=20?'☔ '+pm+'%':'&nbsp;')+'</u></div>';
+        out+='<div><b>'+names[j]+' <small style="font-weight:500;font-size:11px">'+(dt.getMonth()+1)+'/'+dt.getDate()+' '+days[dt.getDay()]+'</small></b><i>'+w2[0]+'</i><span><small>'+Math.round(d.daily.temperature_2m_min[j])+'°</small> / '+Math.round(d.daily.temperature_2m_max[j])+'°</span><u>'+(pm>=20?'☔ '+pm+'%':'&nbsp;')+'</u></div>';
       }
       if(out) dl.innerHTML=out;
     }).catch(function(){});
