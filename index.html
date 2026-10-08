@@ -73,13 +73,20 @@ a{color:inherit}
 .wx-days div small{font-size:16px;font-weight:700;color:#2f6fd6}
 .wx-days div u{display:block;text-decoration:none;font-size:11.5px;color:#3b82c4;margin-top:2px}
 .wx-now{margin-top:6px;font-size:11px;color:var(--muted);text-align:right}
-.wx-hourly{display:flex;gap:4px;overflow-x:auto;margin:8px -14px 0;padding:0 14px 4px;scrollbar-width:none}
+.wx-hourly{margin:12px -14px 0;padding:0 14px;overflow-x:auto;scrollbar-width:none}
 .wx-hourly:empty{display:none}
 .wx-hourly::-webkit-scrollbar{display:none}
-.wx-hourly div{flex:0 0 44px;text-align:center;font-size:11px;color:var(--muted);padding:4px 0}
-.wx-hourly div b{display:block;font-size:12.5px;color:var(--ink);font-weight:600}
-.wx-hourly div i{display:block;font-style:normal;font-size:17px;line-height:1.3}
-.wx-hourly div u{display:block;text-decoration:none;font-size:10px;color:#3b82c4}
+.wx-hourly table{border-collapse:collapse;table-layout:fixed}
+.wx-hourly th,.wx-hourly td{width:52px;min-width:52px;text-align:center;padding:4px 0;font-size:12px;font-weight:500;color:var(--muted);border-top:1px solid var(--line);white-space:nowrap}
+.wx-hourly tr:first-child th,.wx-hourly tr:first-child td{border-top:0}
+.wx-hourly th.lab,.wx-hourly td.lab{position:sticky;left:0;background:var(--card);width:40px;min-width:40px;text-align:left;font-size:11px;color:var(--muted);z-index:1}
+.wx-hourly .hd td{font-weight:700;color:var(--ink);padding-top:6px}
+.wx-hourly .hd td.day{color:#7c5cff}
+.wx-hourly .hd td.day b{display:inline-block;background:#7c5cff;color:#fff;font-size:10.5px;border-radius:999px;padding:1px 7px;margin-bottom:2px}
+.wx-hourly .ic td{font-size:20px;padding:2px 0 4px}
+.wx-hourly .tp td{font-size:14px;font-weight:700;color:var(--ink)}
+.wx-hourly .pp td{color:#3b82c4;font-weight:600}
+.wx-hourly td.nxt{border-left:1px solid #c9bfff}
 .flights{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .flight{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
 .flight b{display:block;font-size:13px;color:var(--muted);font-weight:500}
@@ -421,13 +428,18 @@ a{color:inherit}
     fetch(url).then(function(r){return r.json();}).then(function(d){
       var c=wc(d.current.weather_code);
       now.textContent='실시간 · 지금 '+Math.round(d.current.temperature_2m)+'° '+c[1];
-      var tNow=new Date(d.current.time), h='';
+      var tNow=new Date(d.current.time);
       var start=d.hourly.time.findIndex(function(t){return new Date(t)>=tNow;}); if(start<0) start=0;
-      for(var i=start;i<Math.min(start+24,d.hourly.time.length);i++){
-        var hh=d.hourly.time[i].slice(11,13), w=wc(d.hourly.weather_code[i]), pp=d.hourly.precipitation_probability[i];
-        h+='<div>'+(+hh)+':00<i>'+w[0]+'</i><b>'+Math.round(d.hourly.temperature_2m[i])+'°</b><u>'+(pp>=20?pp+'%':'&nbsp;')+'</u></div>';
+      var r1='<td class="lab"></td>', r2='<td class="lab">날씨</td>', r3='<td class="lab">기온</td>', r4='<td class="lab">강수</td>', today=d.current.time.slice(0,10);
+      for(var i=start;i<Math.min(start+30,d.hourly.time.length);i++){
+        var t=d.hourly.time[i], hh=+t.slice(11,13), w=wc(d.hourly.weather_code[i]), pp=d.hourly.precipitation_probability[i];
+        var isNext=t.slice(0,10)!==today && hh===0, cls=isNext?' class="nxt day"':'';
+        r1+='<td'+cls+'>'+(isNext?'<b>내일</b><br>':'')+hh+':00</td>';
+        r2+='<td'+(isNext?' class="nxt"':'')+'>'+w[0]+'</td>';
+        r3+='<td'+(isNext?' class="nxt"':'')+'>'+Math.round(d.hourly.temperature_2m[i])+'°</td>';
+        r4+='<td'+(isNext?' class="nxt"':'')+'>'+pp+'%</td>';
       }
-      hr.innerHTML=h;
+      hr.innerHTML='<table><tr class="hd">'+r1+'</tr><tr class="ic">'+r2+'</tr><tr class="tp">'+r3+'</tr><tr class="pp">'+r4+'</tr></table>';
       var days=['일','월','화','수','목','금','토'], out='', want=['10-10','10-11','10-12'];
       for(var j=0;j<d.daily.time.length;j++){
         var key=d.daily.time[j].slice(5); if(want.indexOf(key)<0) continue;
