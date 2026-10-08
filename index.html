@@ -163,7 +163,7 @@ a{color:inherit}
 .tips{padding:10px 12px 14px}
 .sub.plain li::before{content:"✔️";font-size:13px;margin-right:6px}
 .sub.plain li{display:block}
-.sub.plain li em{padding-left:26px}
+.sub.plain li em{display:block;padding-left:26px;margin-top:1px}
 .tips h3{margin:4px 0 0;font-size:16px;font-weight:600}
 .tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:1px}
 .tag.resv{background:var(--gold-soft);color:var(--gold)}
@@ -406,7 +406,7 @@ a{color:inherit}
     var fxNote=document.getElementById('fxNote');
     if(!fx.manual){
       fetch('https://open.er-api.com/v6/latest/JPY').then(function(r){return r.json();}).then(function(j){
-        if(j&&j.rates&&j.rates.KRW){ rate.value=(j.rates.KRW*100).toFixed(2); calc(); if(fxNote) fxNote.textContent='실시간 매매기준율 100엔 = '+(j.rates.KRW*100).toFixed(1)+'원 · 트래블월렛과 거의 동일'; }
+        if(j&&j.rates&&j.rates.KRW){ rate.value=(j.rates.KRW*100).toFixed(2); calc(); if(fxNote){ var u=new Date(j.time_last_update_unix*1000); fxNote.textContent='매매기준율 100엔 = '+(j.rates.KRW*100).toFixed(2)+'원 · '+(u.getMonth()+1)+'/'+u.getDate()+' '+('0'+u.getHours()).slice(-2)+':'+('0'+u.getMinutes()).slice(-2)+' 갱신'; } }
       }).catch(function(){});
     } else if(fxNote){ fxNote.textContent='직접 입력한 환율 100엔 = '+rate.value+'원'; }
     function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
