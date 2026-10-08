@@ -443,7 +443,7 @@ a{color:inherit}
       var tNow=new Date(d.current.time);
       var start=d.hourly.time.findIndex(function(t){return new Date(t)>=tNow;}); if(start<0) start=0;
       var r1='<td class="lab"></td>', r2='<td class="lab">날씨</td>', r3='<td class="lab">기온</td>', r4='<td class="lab">강수</td>';
-      for(var i=start;i<Math.min(start+24,d.hourly.time.length);i++){
+      for(var i=start;i<Math.min(start+72,d.hourly.time.length);i++){
         var t=d.hourly.time[i], hh=+t.slice(11,13), code=d.hourly.weather_code[i], w=wc(code), pp=d.hourly.precipitation_probability[i];
         var ico=(hh>=19||hh<6)&&(code===0||code===1)?'🌙':(hh>=19||hh<6)&&code===2?'☁️':w[0];
         var isNext=hh===0&&i>start, nx=isNext?' nxt':'';
