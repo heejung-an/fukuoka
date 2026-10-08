@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>희윤다 세자매 여행 in Fukuoka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  box-sizing:border-box;
+  --bg:#eef1f5; --card:#ffffff; --ink:#1b2233; --muted:#5f6878; --line:#d9dee7;
+  --red:#d9472f; --red-soft:#fbe7e2; --navy:#223355; --navy-soft:#e3e9f4; --gold:#c9972b; --gold-soft:#fbf1d8; --green:#1f9d6a;
+  --walk:#7a8496;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141821; --card:#1d222d; --ink:#eef1f6; --muted:#9aa3b3; --line:#2e3542;
+    --red:#ff6f55; --red-soft:#3a2420; --navy:#aab9dc; --navy-soft:#242c3d; --gold:#e5b44a; --gold-soft:#3a3120; --green:#4cc593; --walk:#8e97a8;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141821; --card:#1d222d; --ink:#eef1f6; --muted:#9aa3b3; --line:#2e3542;
+  --red:#ff6f55; --red-soft:#3a2420; --navy:#aab9dc; --navy-soft:#242c3d; --gold:#e5b44a; --gold-soft:#3a3120; --green:#4cc593; --walk:#8e97a8;
+}
+html{scroll-padding-top:60px;scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans KR","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  line-height:1.5;-webkit-text-size-adjust:100%}
+a{color:inherit}
+.wrap{width:min(760px,calc(100% - 28px));margin:0 auto}
+
+/* 상단 고정 날짜 탭 */
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;padding:10px 0;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:0 0 auto;text-decoration:none;font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.tabs a.hot{background:var(--navy);color:#fff;border-color:var(--navy)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .tabs a.hot{color:#141821} }
+:root[data-theme="dark"] .tabs a.hot{color:#141821}
+
+/* 히어로 */
+.hero{padding:28px 0 10px}
+.hero h1{margin:4px 0 0;font-size:clamp(22px,5.5vw,28px);line-height:1.2;letter-spacing:-.5px;font-weight:700}
+.hero .daytag{display:inline-block;font-style:normal;font-size:13px;font-weight:700;color:#1f6f52;background:#d9f2e5;border:2px solid #fff;box-shadow:0 2px 6px rgba(31,111,82,.18);border-radius:999px;padding:4px 12px;margin-left:10px;vertical-align:5px;letter-spacing:0}
+.hero .daytag::before{content:"✈️ ";font-size:12px}
+.hero .daytag[hidden]{display:none}
+.hero .kicker{margin:0;color:var(--muted);font-size:13px;font-weight:600}
+.hero h1 span{color:var(--red)}
+
+.fx{position:relative;margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 14px 12px}
+.fx-legend{position:absolute;top:-12px;left:12px;background:#d9f2e5;color:#1f6f52;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;line-height:1.2}
+.fx-in{display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:10px;padding:6px 12px}
+.fx-in span{font-size:18px;font-weight:700;color:var(--muted)}
+.fx-in input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:22px;font-weight:700;color:var(--ink);outline:none;font-variant-numeric:tabular-nums}
+.fx-in input::placeholder{font-size:15px;font-weight:500;color:var(--muted)}
+.fx-out{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.fx-out div{background:var(--navy-soft);border-radius:10px;padding:8px 12px}
+.fx-out b{display:block;font-size:12px;color:var(--muted);font-weight:600}
+.fx-out em{font-style:normal;font-size:19px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.fx-set{margin-top:8px;font-size:12px;color:var(--muted)}
+.fx-set summary{cursor:pointer;list-style:none;display:inline-block}
+.fx-set summary::-webkit-details-marker{display:none}
+.fx-set summary::before{content:"⚙ "}
+.fx-set label{display:inline-flex;align-items:center;gap:4px;margin:6px 12px 0 0}
+.fx-set input{width:68px;font:inherit;font-size:13px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.wx-days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wx-days div{text-align:center;background:var(--bg);border-radius:12px;padding:10px 4px 8px}
+.wx-days div b{display:block;font-size:12.5px;font-weight:600;color:var(--muted)}
+.wx-days div i{display:block;font-style:normal;font-size:30px;line-height:1.3;margin:2px 0}
+.wx-days div span{display:block;font-size:16px;font-weight:700;letter-spacing:-.5px;color:#c0392b}
+.wx-days div small{font-size:16px;font-weight:700;color:#2f6fd6}
+.wx-days div u{display:block;text-decoration:none;font-size:11.5px;color:#3b82c4;margin-top:2px}
+.wx-now{margin-top:6px;font-size:11px;color:var(--muted);text-align:right}
+.wx-hourly{display:flex;gap:4px;overflow-x:auto;margin:8px -14px 0;padding:0 14px 4px;scrollbar-width:none}
+.wx-hourly:empty{display:none}
+.wx-hourly::-webkit-scrollbar{display:none}
+.wx-hourly div{flex:0 0 44px;text-align:center;font-size:11px;color:var(--muted);padding:4px 0}
+.wx-hourly div b{display:block;font-size:12.5px;color:var(--ink);font-weight:600}
+.wx-hourly div i{display:block;font-style:normal;font-size:17px;line-height:1.3}
+.wx-hourly div u{display:block;text-decoration:none;font-size:10px;color:#3b82c4}
+.flights{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flight{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.flight b{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.flight .t{font-size:20px;font-weight:700;letter-spacing:-.5px}
+.flight .t small{font-size:13px;color:var(--muted);font-weight:500;margin:0 6px}
+.flight .n{font-size:13px;color:var(--navy);font-weight:600}
+.hotel{margin-top:10px;background:var(--navy-soft);border-radius:14px;padding:12px 14px;font-size:14px}
+.hotel b{display:block;font-size:15px}
+.hotel a{color:var(--navy);font-weight:600;text-decoration:none}
+
+/* 데이 카드 */
+.day{margin:22px 0;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;scroll-margin-top:70px}
+.day-head{padding:14px 18px 12px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;background:var(--navy-soft)}
+#d1 .day-head{background:#d9f2e5}
+#d2 .day-head{background:#d9f2e5}
+#d3 .day-head{background:#d9f2e5}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) #d1 .day-head{background:#1f3a2e} :root:not([data-theme="light"]) #d2 .day-head{background:#1f3a2e} :root:not([data-theme="light"]) #d3 .day-head{background:#1f3a2e} }
+:root[data-theme="dark"] #d1 .day-head{background:#1f3a2e} :root[data-theme="dark"] #d2 .day-head{background:#1f3a2e} :root[data-theme="dark"] #d3 .day-head{background:#1f3a2e}
+.day-head .n{font-size:13px;font-weight:700;color:var(--ink);background:var(--card);padding:3px 9px;border-radius:7px}
+.day-head h2{margin:0;font-size:20px;letter-spacing:-.4px}
+.day-head p{width:100%;margin:4px 0 0;color:var(--muted);font-size:14px}
+.timeline{padding:6px 12px 12px 8px}
+.ev,.walk{display:grid;grid-template-columns:42px 18px 1fr;gap:0 8px}
+.ev{padding:10px 0;align-items:start}
+.ev .time{font-size:13px;font-weight:600;color:var(--navy);padding-top:3px;font-variant-numeric:tabular-nums;text-align:right}
+.ev .time.soft{color:var(--muted);font-weight:500;font-size:12px}
+.dot{position:relative;align-self:stretch}
+.dot::before{content:"";position:absolute;left:8px;top:-10px;bottom:-10px;border-left:2px solid var(--line)}
+.ev:first-child .dot::before{top:8px}
+.ev:last-child .dot::before{bottom:auto;height:8px}
+.dot::after{content:"";position:absolute;left:3px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--navy);box-shadow:0 0 0 3px var(--card)}
+.ev.food .dot::after{background:var(--green)}
+.ev h3{margin:0;font-size:16px;font-weight:600;line-height:1.4;word-break:keep-all}
+.ev p{margin:3px 0 0;font-size:13.5px;color:var(--muted)}
+.walk{padding:8px 0 12px;align-items:center}
+.walk::before{content:"";grid-column:2;justify-self:center;align-self:stretch;min-height:22px;border-left:2px dotted var(--walk);margin-left:-1px}
+.walk span{grid-column:3;font-size:12px;font-weight:600;color:var(--walk);line-height:1.5;word-break:keep-all}
+.walk span::before{content:"🚶 ";font-size:13px}
+.walk.train span::before{content:"🚃 "}
+.walk.subway span::before{content:"🚇 "}
+.walk.taxi span::before{content:"🚕 "}
+.walk.or::before{border-left-style:solid;border-color:var(--line)}
+.walk.or span{color:var(--muted);font-weight:700}
+.walk.or span::before{content:none}
+.walk span em{font-style:normal;color:var(--muted);font-weight:500}
+.walk span em::before{content:"· ";color:var(--walk)}
+.sub{list-style:none;margin:8px 0 0;padding:6px 10px;background:var(--bg);border-radius:10px;font-size:14px}
+.sub li{display:grid;grid-template-columns:1fr;padding:5px 0}
+.sub label{display:flex;align-items:flex-start;gap:8px;cursor:pointer;min-width:0}
+.sub .nm{word-break:keep-all;line-height:1.35}
+.sub .sc{appearance:none;-webkit-appearance:none;width:18px;height:18px;flex:0 0 18px;border:1.5px solid var(--walk);border-radius:5px;margin:1px 0 0;position:relative;background:var(--card);cursor:pointer}
+.sub .sc:checked{background:var(--navy);border-color:var(--navy)}
+.sub .sc:checked::after{content:"";position:absolute;left:5px;top:2px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.sub .sc:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.sub li:has(.sc:checked) .nm{text-decoration:line-through;color:var(--muted)}
+.sub li em{padding-left:26px;font-style:normal;font-size:12px;color:var(--muted);line-height:1.4}
+.pin{text-decoration:none;font-size:14px;opacity:.75;margin-left:4px}
+.sub .nm .pin{margin-left:3px}
+.pin:hover{opacity:1}
+.memo-btn{font:inherit;font-size:12px;font-weight:600;color:var(--gold);background:var(--gold-soft);border:0;border-radius:6px;padding:3px 8px;margin-left:6px;cursor:pointer;vertical-align:1px}
+.modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px}
+.modal[hidden]{display:none}
+.modal-box{position:relative;background:var(--card);color:var(--ink);border-radius:16px;padding:20px 20px 16px;width:min(420px,100%);max-height:80vh;overflow:auto;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.modal-box h4{margin:0 32px 10px 0;font-size:17px}
+.modal-box ul{margin:0;padding-left:18px;font-size:14px}
+.modal-box li{margin:5px 0}
+.modal-foot{margin:12px 0 0;font-size:12px;color:var(--muted)}
+.modal-x{position:absolute;top:12px;right:12px;width:32px;height:32px;border:0;border-radius:50%;background:var(--bg);color:var(--ink);font-size:16px;cursor:pointer}
+.totop{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:20px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.25);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
+.totop.show{opacity:1;pointer-events:auto}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .totop{color:#141821} }
+:root[data-theme="dark"] .totop{color:#141821}
+.tips{padding:10px 12px 14px}
+.sub.plain li::before{content:"✔️";font-size:13px;margin-right:6px}
+.sub.plain li{display:block}
+.sub.plain li em{padding-left:26px}
+.tips h3{margin:4px 0 0;font-size:16px;font-weight:600}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:1px}
+.tag.resv{background:var(--gold-soft);color:var(--gold)}
+.tag.todo{background:var(--red-soft);color:var(--red)}
+.ev.now{background:var(--red-soft);margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:12px}
+.ev.now .dot::after{background:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
+.ev.now h3::after{content:"지금";font-size:11px;font-weight:700;color:#fff;background:var(--red);padding:2px 7px;border-radius:6px;margin-left:8px;vertical-align:2px}
+
+@media (max-width:420px){ .flights{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><nav class="tabs">
+  <a href="#top">🗓 전체</a>
+  <a href="#d1" data-day="2026-10-10">1일차 10/10 토</a>
+  <a href="#d2" data-day="2026-10-11">2일차 10/11 일</a>
+  <a href="#d3" data-day="2026-10-12">3일차 10/12 월</a>
+  <a href="#tips">🛍 쇼핑 팁</a>
+</nav></div></div>
+
+<main class="wrap" id="top">
+<header class="hero">
+  <p class="kicker">후쿠오카 2박 3일 · 10/10(토) – 10/12(월)</p>
+  <h1>희윤다 세자매 여행 <span>in Fukuoka</span><em class="daytag" id="daytag" hidden></em></h1>
+
+  <div class="fx wx" id="wx"><span class="fx-legend">날씨</span>
+    <div class="wx-days" id="wxDaily">
+      <div><b>10/10 토</b><i>🌤</i><span><small>19°</small> / 28°</span><u>☔ 25%</u></div>
+      <div><b>10/11 일</b><i>🌦</i><span><small>18°</small> / 28°</span><u>☔ 55%</u></div>
+      <div><b>10/12 월</b><i>☀️</i><span><small>19°</small> / 28°</span><u>&nbsp;</u></div>
+    </div>
+    <div class="wx-now" id="wxNow">10/8 기준 예보</div>
+    <div class="wx-hourly" id="wxHourly"></div>
+  </div>
+  <div class="fx"><span class="fx-legend">환전</span>
+    <div class="fx-row">
+      <label class="fx-in"><span>¥</span><input id="fxJpy" type="number" inputmode="decimal" placeholder="엔화 입력" min="0"></label>
+    </div>
+    <div class="fx-out">
+      <div><b>💴 현금</b><em id="fxCash">—</em></div>
+      <div><b>💳 신용카드</b><em id="fxCard">—</em></div>
+    </div>
+    <details class="fx-set">
+      <summary>환율 설정</summary>
+      <label>100엔 = <input id="fxRate" type="number" inputmode="decimal" step="0.1"> 원</label>
+      <label>카드 수수료 <input id="fxFee" type="number" inputmode="decimal" step="0.1"> %</label>
+    </details>
+  </div>
+  <div class="flights">
+    <div class="flight"><b>가는 편 · 10/10</b><div class="t">11:10<small>→</small>12:40</div><div class="n">제주항공 7C1471 · 인천 → 후쿠오카</div></div>
+    <div class="flight"><b>오는 편 · 10/12</b><div class="t">19:50<small>→</small>21:20</div><div class="n">제주항공 7C1408 · 후쿠오카 → 인천</div></div>
+  </div>
+  <div class="hotel"><b style="margin:0">🏨 베스트 웨스턴 플러스 후쿠오카 텐진-미나미<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Fukuoka+Tenjin-Minami" target="_blank" rel="noopener" aria-label="지도">📍</a></b></div>
+</header>
+
+<!-- ───────── 1일차 ───────── -->
+<section class="day" id="d1">
+  <div class="day-head"><span class="n">1일차</span><h2>10/10 토</h2></div>
+  <div class="timeline">
+    <div class="ev" data-t="07:15"><div class="time">07:15</div><div class="dot"></div><div><h3>🏠 윤정 숲속마을 도착</h3></div></div>
+    <div class="ev" data-t="07:30"><div class="time">07:30</div><div class="dot"></div><div><h3>🚗 숲속마을 출발</h3></div></div>
+    <div class="ev" data-t="07:40"><div class="time">07:40</div><div class="dot"></div><div><h3>🙋 희정 픽업</h3></div></div>
+    <div class="ev" data-t="08:20"><div class="time">08:20</div><div class="dot"></div><div><h3>✈️ 인천공항 1터미널 도착<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Incheon+Airport+Terminal+1" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>출발 2시간 50분 전</p></div></div>
+    <div class="ev" data-t="11:10"><div class="time">11:10</div><div class="dot"></div><div><h3>🛫 인천 출발 · 7C1471</h3><p>비행 1시간 30분</p></div></div>
+    <div class="ev" data-t="12:40"><div class="time">12:40</div><div class="dot"></div><div><h3>🛬 후쿠오카 공항 도착<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport+International+Terminal" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>입국 후 국제선 터미널에서 택시 탑승</p></div></div>
+    <div class="walk taxi"><span>택시 15~20분 <em>약 5km · 2,500~3,000엔</em></span></div>
+    <div class="ev" data-t="14:00"><div class="time">14:00</div><div class="dot"></div><div><h3>🏨 호텔 짐 맡기기<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Fukuoka+Tenjin-Minami" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>프런트에 짐 맡기고 바로 점심 이동</p></div></div>
+    <div class="walk"><span>도보 10분</span></div>
+    <div class="ev food" data-t="14:20"><div class="time">14:20</div><div class="dot"></div><div><h3>🍜 신신라멘<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Shin+Shin+Ramen+Tenjin" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>호텔에서 도보 10분</p></div></div>
+    <div class="walk"><span>도보 3분 <em>250m</em></span></div>
+    <div class="ev" data-t="15:30"><div class="time">15:30</div><div class="dot"></div><div><h3>🛍 미나텐진</h3><ul class="sub"><li><label><input type="checkbox" class="sc" data-k="s1"><span class="nm">유니클로&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Uniqlo+Mina+Tenjin" target="_blank" rel="noopener" aria-label="유니클로 지도">📍</a></span></label></li><li><label><input type="checkbox" class="sc" data-k="s2"><span class="nm">GU&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=GU+Mina+Tenjin" target="_blank" rel="noopener" aria-label="GU 지도">📍</a></span></label></li></ul></div></div>
+    <div class="walk"><span>도보 10분 <em>700m</em></span></div>
+    <div class="ev" data-t="15:40"><div class="time soft"></div><div class="dot"></div><div><h3>🏕 몽벨 텐진점<a class="pin" href="https://www.google.com/maps/search/?api=1&query=mont-bell+Fukuoka+Tenjin" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk"><span>도보 2분 <em>110m</em></span></div>
+    <div class="ev" data-t="16:00"><div class="time soft"></div><div class="dot"></div><div><h3>🛍 이와타야 본점 <button class="memo-btn" type="button" data-memo="m-iwataya">📝 메모</button><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Iwataya+Main+Store+Tenjin" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><ul class="sub"><li><label><input type="checkbox" class="sc" data-k="s13"><span class="nm">코치 (COACH)&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Coach+Iwataya+Fukuoka" target="_blank" rel="noopener" aria-label="코치 지도">📍</a></span></label><em>본관 2F · 20:00 마감</em></li></ul></div></div>
+    <div class="walk"><span>도보 3분 <em>250m</em></span></div>
+    <div class="ev" data-t="16:10"><div class="time soft"></div><div class="dot"></div><div><h3>📷 빅카메라 1호관<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Bic+Camera+Tenjin+1" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk"><span>도보 2~3분 (지하상가 입구로) <em>150m</em></span></div>
+    <div class="ev" data-t="16:40"><div class="time soft"></div><div class="dot"></div><div><h3>🛍 텐진 지하상가</h3><ul class="sub"><li><label><input type="checkbox" class="sc" data-k="s4"><span class="nm">네추럴키친&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Natural+Kitchen+Tenjin+Chikagai" target="_blank" rel="noopener" aria-label="네추럴키친 지도">📍</a></span></label></li><li><label><input type="checkbox" class="sc" data-k="s5"><span class="nm">EAST table ワン・フクオカ・ビル店&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=EAST+table+ワン・フクオカ・ビル店" target="_blank" rel="noopener" aria-label="EAST table ワン・フクオカ・ビル店 지도">📍</a></span></label></li><li><label><input type="checkbox" class="sc" data-k="s6"><span class="nm">요시다포터&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Porter+Tenjin+Chikagai" target="_blank" rel="noopener" aria-label="요시다포터 지도">📍</a></span></label></li></ul></div></div>
+    <div class="walk"><span>도보 3분 <em>250m</em></span></div>
+    <div class="ev food" data-t="19:00"><div class="time">19:00</div><div class="dot"></div><div><h3>🍣 스시사카바 사시미노사시스<a class="pin" href="https://www.google.com/maps/search/?api=1&query=%E5%AF%BF%E5%8F%B8%E9%85%92%E5%A0%B4+%E3%81%95%E3%81%97%E3%81%BF%E3%81%AE%E3%81%95%E3%81%97%E3%81%99+%E5%A4%A9%E7%A5%9E" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>19:00~20:00</p></div></div>
+    <div class="walk"><span>도보 8분 <em>600m</em></span></div>
+    <div class="ev" data-t="20:00"><div class="time soft">저녁 후</div><div class="dot"></div><div><h3>🏨 호텔 체크인<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Fukuoka+Tenjin-Minami" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk"><span>도보 8분 <em>550m</em></span></div>
+    <div class="ev food" data-t="20:30"><div class="time soft">밤</div><div class="dot"></div><div><h3>🥃 하이볼바 나카스 1923<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Highball+Bar+Nakasu+1923" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>18:30 오픈 · 커버차지 550엔 (기본 안주 포함)</p></div></div>
+    <div class="walk or"><span>또는</span></div>
+    <div class="ev food" data-t="20:31"><div class="time soft">밤</div><div class="dot"></div><div><h3>🥃 BAR LINXAS<a class="pin" href="https://www.google.com/maps/search/?api=1&query=BAR+LINXAS+Fukuoka" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>호텔에서 도보 2분 · 150m · 19:00 오픈 · 커버차지 1,000엔 (치즈·과일 안주)</p></div></div>
+  </div>
+</section>
+
+<!-- ───────── 2일차 ───────── -->
+<section class="day" id="d2">
+  <div class="day-head"><span class="n">2일차</span><h2>10/11 일</h2></div>
+  <div class="timeline">
+    <div class="ev food" data-t="10:00"><div class="time">10:00</div><div class="dot"></div><div><h3>🍠 이모야 킨지로 텐진 지하상가점<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Imoya+Kinjiro+Tenjin+Chikagai" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>10:00 오픈 · 고구마 사서 바로 누이스로</p></div></div>
+    <div class="walk"><span>도보 8분 <em>600m</em></span></div>
+    <div class="ev food" data-t="11:00"><div class="time soft"></div><div class="dot"></div><div><h3>🍽 누이스 텐진 <span class="tag todo">웨이팅</span><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Nuis+Tenjin+Fukuoka" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>08:00 오픈</p></div></div>
+    <div class="walk"><span>도보 13분 <em>1km</em></span></div>
+    <div class="ev" data-t="12:30"><div class="time soft">점심 후</div><div class="dot"></div><div><h3>🏨 호텔에 고구마 두고 나오기<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Fukuoka+Tenjin-Minami" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk subway"><span>지하철 공항선 5분 <em>텐진 → 하카타 · 하카타구치 출구</em></span></div>
+    <div class="ev" data-t="13:15"><div class="time soft">오후</div><div class="dot"></div><div><h3>🛍 하카타 쇼핑 <button class="memo-btn" type="button" data-memo="m-guest">📝 메모</button></h3><p>하카타역 북쪽에서 남쪽으로 내려오는 순서. 전부 역 건물 안·바로 옆이라 걷는 건 각 2~3분</p><ul class="sub"><li><label><input type="checkbox" class="sc" data-k="s7"><span class="nm">다이소&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Daiso+Hakata+Bus+Terminal" target="_blank" rel="noopener" aria-label="다이소 지도">📍</a></span></label><em>하카타 버스터미널 5F</em></li><li><label><input type="checkbox" class="sc" data-k="s8"><span class="nm">스탠다드프로덕트&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Standard+Products+Hakata+Bus+Terminal" target="_blank" rel="noopener" aria-label="스탠다드프로덕트 지도">📍</a></span></label><em>같은 층, 다이소 옆</em></li><li><label><input type="checkbox" class="sc" data-k="s9"><span class="nm">HANDS 하카타&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=HANDS+Hakata+Store" target="_blank" rel="noopener" aria-label="HANDS 하카타 지도">📍</a></span></label><em>AMU PLAZA 1~5F · 버스터미널 바로 옆</em></li><li><label><input type="checkbox" class="sc" data-k="s12"><span class="nm">단톤 (DANTON)&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=DANTON+FUKUOKA+JR+Hakata+City" target="_blank" rel="noopener" aria-label="단톤 (DANTON) 지도">📍</a></span></label><em>AMU PLAZA 4F · 한국어 가능 직원</em></li><li><label><input type="checkbox" class="sc" data-k="s14"><span class="nm">🥐 일 포르노 델 미뇽&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=il+FORNO+del+MIGNON+Hakata" target="_blank" rel="noopener" aria-label="미뇽 지도">📍</a></span></label><em>하카타역 1F 콘코스 · 크루아상 · 줄 있음</em></li><li><label><input type="checkbox" class="sc" data-k="s10"><span class="nm">3COINS&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=3COINS+Hakata+Station" target="_blank" rel="noopener" aria-label="3COINS 지도">📍</a></span></label><em>JR하카타시티 내 · 20:00 마감</em></li></ul></div></div>
+    <div class="walk"><span>도보 3~4분 <em>250m</em></span></div>
+    <div class="ev food" data-t="18:00"><div class="time">18:00</div><div class="dot"></div><div><h3>🍲 하카타 모츠나베 오오야마 KITTE 하카타점 <span class="tag resv">희정 예약 완료</span><a class="pin" href="https://www.google.com/maps/search/?api=1&query=Motsunabe+Ooyama+KITTE+Hakata" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>KITTE 하카타 9F · 하카타역 바로 앞</p></div></div>
+    <div class="walk taxi"><span>택시 10~15분 <em>약 2km · 1,000~1,300엔</em></span></div>
+    <div class="ev" data-t="19:30"><div class="time soft">저녁 후</div><div class="dot"></div><div><h3>🏨 호텔에 쇼핑 짐 두기<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Fukuoka+Tenjin-Minami" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk"><span>도보 12분 <em>950m</em></span></div>
+    <div class="ev" data-t="20:00"><div class="time soft"></div><div class="dot"></div><div><h3>🛒 돈키호테 텐진 본점<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Don+Quijote+Tenjin+Honten" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk"><span>도보 1분 <em>바로 옆 건물</em></span></div>
+    <div class="ev food" data-t="21:00"><div class="time soft">밤</div><div class="dot"></div><div><h3>🍺 이자카야 신지다이 텐진점<a class="pin" href="https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E6%99%82%E4%BB%A3+%E5%A4%A9%E7%A5%9E" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+  </div>
+</section>
+
+<!-- ───────── 3일차 ───────── -->
+<section class="day" id="d3">
+  <div class="day-head"><span class="n">3일차</span><h2>10/12 월</h2></div>
+  <div class="timeline">
+    <div class="ev" data-t="08:40"><div class="time">08:40</div><div class="dot"></div><div><h3>🏨 체크아웃 · 캐리어 프런트 보관<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Fukuoka+Tenjin-Minami" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk"><span>도보 6분 <em>450m</em></span></div>
+    <div class="ev food" data-t="09:00"><div class="time">09:00</div><div class="dot"></div><div><h3>🍙 오니기리 고리짱 텐진<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Onigiri+Gorichan+Tenjin" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>~09:35 아침식사</p></div></div>
+    <div class="walk"><span>도보 9분 <em>600m</em></span></div>
+    <div class="ev" data-t="09:50"><div class="time">09:50</div><div class="dot"></div><div><h3>🚉 니시테츠 후쿠오카(텐진)역<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Nishitetsu+Fukuoka+Tenjin+Station" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>다자이후행 탑승 (후츠카이치 환승)</p></div></div>
+    <div class="walk train"><span>니시테츠 약 30분 <em>편도 약 420엔</em></span></div>
+    <div class="ev" data-t="10:30"><div class="time">10:30</div><div class="dot"></div><div><h3>🚉 다자이후역<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Dazaifu+Station+Nishitetsu" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+    <div class="walk"><span>도보 바로 앞</span></div>
+    <div class="ev" data-t="10:35"><div class="time soft">10:30~</div><div class="dot"></div><div><h3>🏮 참배길<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Dazaifu+Tenmangu+Omotesando" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>~11:00 천천히 구경하며 텐만구까지 (500m)</p></div></div>
+    <div class="walk"><span>도보 7분 <em>500m</em></span></div>
+    <div class="ev" data-t="11:00"><div class="time">11:00</div><div class="dot"></div><div><h3>⛩ 다자이후 텐만구<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Dazaifu+Tenmangu" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>~12:05 관광</p></div></div>
+    <div class="walk"><span>도보 4분 <em>300m</em></span></div>
+    <div class="ev food" data-t="12:05"><div class="time">12:05</div><div class="dot"></div><div><h3>🍡 카사노야 우메가에모치<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Kasanoya+Dazaifu" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>~12:25 · 이후 참배길 상점·기념품 구경</p></div></div>
+    <div class="walk"><span>도보 3분 <em>250m · 참배길 뒷골목</em></span></div>
+    <div class="ev food" data-t="13:00"><div class="time">13:00</div><div class="dot"></div><div><h3>🍱 우나기노 나루세 다자이후 텐만구점<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Unagi+no+Naruse+Dazaifu" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>~14:00 장어덮밥 · 17:00 마감</p></div></div>
+    <div class="walk"><span>도보 3분 <em>250m</em></span></div>
+    <div class="ev food" data-t="14:05"><div class="time">14:05</div><div class="dot"></div><div><h3>☕ coba cafe<a class="pin" href="https://www.google.com/maps/search/?api=1&query=coba+cafe+Dazaifu" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>~15:10 · 라스트오더 17:30</p></div></div>
+    <div class="walk"><span>도보 1분</span></div>
+    <div class="ev" data-t="15:10"><div class="time">15:10</div><div class="dot"></div><div><h3>🏮 참배길 마지막 쇼핑 · 사진<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Dazaifu+Tenmangu+Omotesando" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>~15:35</p></div></div>
+    <div class="walk"><span>도보 2분 <em>100m</em></span></div>
+    <div class="ev" data-t="15:40"><div class="time">15:40</div><div class="dot"></div><div><h3>🚉 다자이후역<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Dazaifu+Station+Nishitetsu" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>15:51 전후 텐진행 출발</p></div></div>
+    <div class="walk train"><span>니시테츠 약 35분</span></div>
+    <div class="ev" data-t="16:30"><div class="time">16:30</div><div class="dot"></div><div><h3>🚉 니시테츠 후쿠오카(텐진)역<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Nishitetsu+Fukuoka+Tenjin+Station" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>16:25~16:35 도착 예상</p></div></div>
+    <div class="walk"><span>도보 9분 <em>600m</em></span></div>
+    <div class="ev" data-t="16:40"><div class="time">16:40</div><div class="dot"></div><div><h3>🏨 호텔 짐 수령 · 택시 호출<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Best+Western+Plus+Fukuoka+Tenjin-Minami" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>17:00 호텔 출발</p></div></div>
+    <div class="walk taxi"><span>택시 15~20분 <em>약 5km · 2,500~3,000엔</em></span></div>
+    <div class="ev" data-t="17:30"><div class="time">17:30</div><div class="dot"></div><div><h3>✈️ 후쿠오카 공항 국제선 도착<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport+International+Terminal" target="_blank" rel="noopener" aria-label="지도">📍</a></h3><p>출발 2시간 20분 전 · 면세·식사 여유 있음</p></div></div>
+    <div class="ev" data-t="19:50"><div class="time">19:50</div><div class="dot"></div><div><h3>🛫 후쿠오카 출발 · 7C1408</h3><p>비행 1시간 30분</p></div></div>
+    <div class="ev" data-t="21:20"><div class="time">21:20</div><div class="dot"></div><div><h3>🛬 인천공항 1터미널 도착<a class="pin" href="https://www.google.com/maps/search/?api=1&query=Incheon+Airport+Terminal+1" target="_blank" rel="noopener" aria-label="지도">📍</a></h3></div></div>
+  </div>
+</section>
+
+
+<!-- ───────── 쇼핑 팁 ───────── -->
+<section class="day" id="tips">
+  <div class="day-head"><span class="n">TIP</span><h2>쇼핑 팁</h2></div>
+  <div class="tips">
+    <h3>🎒 요시다 포터 매장 위치</h3>
+    <ul class="sub plain"><li><span class="nm">캐널시티 하카타 B1 LaFesta&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=PORTER+Canal+City+Hakata" target="_blank" rel="noopener" aria-label="캐널시티 하카타 B1 LaFesta 지도">📍</a></span><em>캐널시티 지하 1층</em></li><li><span class="nm">아뮤플라자 하카타 2F (HANDS)&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=PORTER+HANDS+Hakata" target="_blank" rel="noopener" aria-label="아뮤플라자 하카타 2F (HANDS) 지도">📍</a></span><em>2일차 하카타 쇼핑 때 HANDS 안에서</em></li><li><span class="nm">텐진 지하상가 KURA CHIKA&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=KURA+CHIKA+by+PORTER+Fukuoka" target="_blank" rel="noopener" aria-label="텐진 지하상가 KURA CHIKA 지도">📍</a></span><em>1일차 지하상가 리스트에 있음</em></li><li><span class="nm">후쿠오카 공항&#8288;<a class="pin" href="https://www.google.com/maps/search/?api=1&query=PORTER+Fukuoka+Airport" target="_blank" rel="noopener" aria-label="후쿠오카 공항 지도">📍</a></span><em>귀국 전 마지막 기회</em></li></ul>
+  </div>
+</section>
+</main>
+<button class="totop" id="toTop" type="button" aria-label="맨 위로">↑</button>
+<div class="modal" id="m-iwataya" hidden>
+  <div class="modal-box">
+    <button class="modal-x" type="button" aria-label="닫기">✕</button>
+    <h4>🎫 이와타야 외국인 게스트카드</h4>
+    <ul>
+      <li>본관 7층에서 여권 제시하고 무료 발급 (이세탄·미츠코시 계열 공통)</li>
+      <li>결제 시 카드 제시하면 5% 할인 — 결제 전에 먼저 만들어야 함</li>
+      <li>결제 후 다시 7층 면세 카운터에서 면세 처리</li>
+      <li>해외 명품 브랜드·일부 품목은 5% 제외일 수 있음 → 코치 적용 여부는 매장에서 확인</li>
+    </ul>
+    <p class="modal-foot">순서: 7층 카드 발급 → 2층 코치 결제 → 7층 면세</p>
+  </div>
+</div>
+<div class="modal" id="m-guest" hidden>
+  <div class="modal-box">
+    <button class="modal-x" type="button" aria-label="닫기">✕</button>
+    <h4>🎫 아뮤플라자 하카타 게스트 쿠폰</h4>
+    <ul>
+      <li>외국인 관광객 대상 5% 할인 쿠폰, 무료 발급</li>
+      <li>발급처: 아뮤플라자 1층 인포메이션 또는 M3층 면세 카운터</li>
+      <li>여권 지참 필수</li>
+      <li>단톤·HANDS 등 아뮤플라자 입점 매장에서 사용 (매장별 제외 품목 있음)</li>
+      <li>면세는 결제 후 M3층 면세 카운터에서 별도 처리 — 쇼핑 전에 쿠폰 먼저 받기</li>
+    </ul>
+    <p class="modal-foot">2026년 7월 기준 정보. 현장에서 한 번 더 확인</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  // D-Day + 현재 시간 일정으로 이동
+  try{
+    var s=new Date(2026,9,10), e=new Date(2026,9,12), now=new Date(), t=new Date(now); t.setHours(0,0,0,0);
+    var dt=document.getElementById('daytag');
+    if(t<s){ dt.textContent='D-'+Math.round((s-t)/864e5); dt.hidden=false; }
+    if(t>=s && t<=e){
+      var n=Math.round((t-s)/864e5)+1;
+      dt.textContent=n+'일차'; dt.hidden=false;
+      var a=document.querySelector('.tabs a[data-day="2026-10-'+(9+n)+'"]'); if(a) a.classList.add('hot');
+      var evs=[].slice.call(document.querySelectorAll('#d'+n+' .ev[data-t]'));
+      var cur=now.getHours()*60+now.getMinutes(), target=evs[0];
+      evs.forEach(function(x){ var p=x.dataset.t.split(':'); if(+p[0]*60+ +p[1]<=cur) target=x; });
+      if(target){
+        target.classList.add('now');
+        setTimeout(function(){ target.scrollIntoView({block:'center',behavior:'auto'}); },50);
+      }
+    }
+  }catch(err){}
+  // 쇼핑 체크 저장 (이 기기 브라우저에만)
+  var KEY='fukuoka-2026-shop';
+  try{
+    var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+    document.querySelectorAll('.sc').forEach(function(c){
+      if(saved[c.dataset.k]) c.checked=true;
+      c.addEventListener('change',function(){
+        saved[c.dataset.k]=c.checked;
+        try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+      });
+    });
+  }catch(err){}
+
+  // 메모 레이어
+  document.querySelectorAll('.memo-btn').forEach(function(b){
+    b.addEventListener('click',function(){ var m=document.getElementById(b.dataset.memo); if(m) m.hidden=false; });
+  });
+  document.querySelectorAll('.modal').forEach(function(m){
+    m.querySelector('.modal-x').addEventListener('click',function(){ m.hidden=true; });
+    m.addEventListener('click',function(e){ if(e.target===m) m.hidden=true; });
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') document.querySelectorAll('.modal').forEach(function(m){m.hidden=true;}); });
+
+  // 환전 계산기
+  try{
+    var FX='fukuoka-2026-fx-v2', fx=JSON.parse(localStorage.getItem(FX)||'{}');
+    var jpy=document.getElementById('fxJpy'), rate=document.getElementById('fxRate'), fee=document.getElementById('fxFee');
+    rate.value=fx.rate||850; fee.value=(fx.fee!=null?fx.fee:2.3);
+    function won(n){return Math.round(n).toLocaleString('ko-KR')+'원';}
+    function calc(){
+      var y=parseFloat(jpy.value)||0, r=parseFloat(rate.value)||0, f=parseFloat(fee.value)||0;
+      var cash=y*r/100, card=cash*(1+f/100);
+      document.getElementById('fxCash').textContent=y?won(cash):'—';
+      document.getElementById('fxCard').textContent=y?won(card):'—';
+    }
+    [jpy,rate,fee].forEach(function(el){ el.addEventListener('input',function(){
+      calc(); try{localStorage.setItem(FX,JSON.stringify({rate:rate.value,fee:fee.value}));}catch(e){}
+    }); });
+    calc();
+  }catch(err){}
+
+  // 맨 위로
+  var tt=document.getElementById('toTop');
+  tt.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  window.addEventListener('scroll',function(){ tt.classList.toggle('show',window.scrollY>300); },{passive:true});
+
+  // 후쿠오카 날씨 (open-meteo, 키 불필요)
+  (function(){
+    var W={0:['☀️','맑음'],1:['🌤','대체로 맑음'],2:['⛅','구름 조금'],3:['☁️','흐림'],45:['🌫','안개'],48:['🌫','안개'],51:['🌦','이슬비'],53:['🌦','이슬비'],55:['🌧','이슬비'],61:['🌧','비'],63:['🌧','비'],65:['🌧','강한 비'],66:['🌧','비'],67:['🌧','비'],71:['🌨','눈'],73:['🌨','눈'],75:['🌨','눈'],77:['🌨','눈'],80:['🌦','소나기'],81:['🌧','소나기'],82:['⛈','강한 소나기'],95:['⛈','뇌우'],96:['⛈','뇌우'],99:['⛈','뇌우']};
+    function wc(c){return W[c]||['🌡','—'];}
+    var url='https://api.open-meteo.com/v1/forecast?latitude=33.59&longitude=130.40&current=temperature_2m,weather_code&hourly=temperature_2m,weather_code,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&forecast_days=7';
+    var now=document.getElementById('wxNow'), hr=document.getElementById('wxHourly'), dl=document.getElementById('wxDaily');
+    if(!now) return;
+    fetch(url).then(function(r){return r.json();}).then(function(d){
+      var c=wc(d.current.weather_code);
+      now.textContent='실시간 · 지금 '+Math.round(d.current.temperature_2m)+'° '+c[1];
+      var tNow=new Date(d.current.time), h='';
+      var start=d.hourly.time.findIndex(function(t){return new Date(t)>=tNow;}); if(start<0) start=0;
+      for(var i=start;i<Math.min(start+24,d.hourly.time.length);i++){
+        var hh=d.hourly.time[i].slice(11,13), w=wc(d.hourly.weather_code[i]), pp=d.hourly.precipitation_probability[i];
+        h+='<div>'+(+hh)+':00<i>'+w[0]+'</i><b>'+Math.round(d.hourly.temperature_2m[i])+'°</b><u>'+(pp>=20?pp+'%':'&nbsp;')+'</u></div>';
+      }
+      hr.innerHTML=h;
+      var days=['일','월','화','수','목','금','토'], out='', want=['10-10','10-11','10-12'];
+      for(var j=0;j<d.daily.time.length;j++){
+        var key=d.daily.time[j].slice(5); if(want.indexOf(key)<0) continue;
+        var dt=new Date(d.daily.time[j]+'T00:00:00'), w2=wc(d.daily.weather_code[j]), pm=d.daily.precipitation_probability_max[j];
+        out+='<div><b>'+(dt.getMonth()+1)+'/'+dt.getDate()+' '+days[dt.getDay()]+'</b><i>'+w2[0]+'</i><span><small>'+Math.round(d.daily.temperature_2m_min[j])+'°</small> / '+Math.round(d.daily.temperature_2m_max[j])+'°</span><u>'+(pm>=20?'☔ '+pm+'%':'&nbsp;')+'</u></div>';
+      }
+      if(out) dl.innerHTML=out;
+    }).catch(function(){});
+  })();
+})();
+</script>
+</body>
+</html>
